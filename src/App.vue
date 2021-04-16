@@ -8,14 +8,10 @@
       "
     ></searchmovies>
 
-    <!-- sezione carrello   -->
-    <h3 class="pr-15">Totale carrello: {{ this.totalSpend }}</h3>
-    <h3 class="pr-15">Totale film: {{ this.numberFilms }}</h3>
-    <h3 class="pr-15" v-if="discount">Sconto applicato</h3>
-    <div v-if="this.rentedFilms[0]" class="pr-15">
+    <!--         <div v-if="this.rentedFilms[0]" class="pr-15">
       <div class="container-rented">
         <div class="container">
-          <h1 class="pr-15">NOLEGGIATI</h1>
+          <h1 class="pr-15">RENTED</h1>
         </div>
         <div class="container">
           <div v-for="film in rentedFilms" :key="film.id">
@@ -23,9 +19,29 @@
           </div>
         </div>
       </div>
-    </div>
-    <button @click="rentFilms()">Noleggia film</button>
-    <div v-if="this.filmCart[0]">
+    </div> -->
+
+    <rental :rentedFilms="this.rentedFilms"> </rental>
+
+    <!-- sezione carrello   -->
+    <cart
+      :filmCart="this.filmCart"
+      :totalSpend="this.totalSpend"
+      :numberFilms="this.numberFilms"
+      :discount="this.discount"
+      @completa-acquisto="rentFilms"
+      @esci-img-carrello="esciImmagineCarrello"
+      @passa-sopra-img-carrello="passaSopraImmagineCarrello"
+      @rimuovi-film-carrello="removeFilmCart"
+      :activeFilmIdCart="this.activeFilmIdCart"
+      :urlImgBase="this.url_img_base"
+    ></cart>
+
+    <!--     <div v-if="this.filmCart[0]">
+      <h3 class="pr-15">Totale carrello: {{ this.totalSpend }}</h3>
+      <h3 class="pr-15">Totale film: {{ this.numberFilms }}</h3>
+      <h3 class="pr-15" v-if="discount">Sconto applicato</h3>
+      <button @click="rentFilms()">Noleggia film</button>
       <div class="container-cart">
         <div class="container">
           <h1 class="pr-15">CART</h1>
@@ -55,10 +71,20 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- sezione preferiti   -->
-    <div v-if="this.favoriteFilm[0]">
+    <favorite
+      :favoriteFilm="this.favoriteFilm"
+      :activeFilmIdFavorite="this.activeFilmIdFavorite"
+      @esci-img-preferiti="esciImmaginePreferiti"
+      @passa-sopra-img-preferiti="passaSopraImmaginePreferiti"
+      @rimuovi-film-dentro-preferiti="removeFilm"
+      @aggiungi-film-dentro-carrello="addFilmCart"
+      :urlImgBase="this.url_img_base"
+    ></favorite>
+
+    <!--     <div v-if="this.favoriteFilm[0]">
       <div class="container-favorite">
         <div class="container">
           <h1>FAVORITE FILM</h1>
@@ -88,11 +114,23 @@
         </div>
       </div>
     </div>
-
+ -->
     <!-- sezione film ricercati   -->
     <p v-if="this.isFetching">sto caricando ....</p>
     <p v-if="this.apiError">{{ this.apiError }}</p>
-    <div v-if="this.apiData.results">
+
+    <foundmovies
+      :apiData="this.apiData"
+      :arrayFilms="this.arrayfilms"
+      :urlImgBase="this.url_img_base"
+      :activeFilmId="this.activeFilmId"
+      @passa-sopra-img="passaSopraImmagine"
+      @esci-img="esciImmagine"
+      @aggiungi-film="addFilm"
+      @aggiungi-film-dentro-carrello="addFilmCart"
+    ></foundmovies>
+
+    <!--     <div v-if="this.apiData.results">
       <div class="container">
         <div
           class="card"
@@ -115,11 +153,13 @@
             <button @click="addFilmCart(film)">Aggiungi al carrello</button>
           </div>
         </div>
-        <!--         <div v-if="heart">
+
+        <div v-if="heart">
           <img src="./assets/heart.png" alt="" />
-        </div> -->
+        </div>
+
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -137,12 +177,20 @@ SULLA LISTA PRINCIPALE DEI FILM UNA VOLTA NOLEGGIATO DEVE COMPARIRE UN TESTO CON
 */
 
 import searchmovies from "./components/SearchFilms.vue";
+import rental from "./components/Rentals.vue";
+import cart from "./components/Cart.vue";
+import favorite from "./components/Favorites.vue";
+import foundmovies from "./components/FoundMovies.vue";
 /* import feature from "./components/FeatureTab.vue"; */
 
 export default {
   name: "App",
   components: {
     searchmovies,
+    rental,
+    cart,
+    favorite,
+    foundmovies,
     /*     feature, */
   },
   data() {
@@ -161,9 +209,9 @@ export default {
       activeFilmIdCart: null,
       favoriteFilm: [],
       filmCart: [],
-      totalSpend: null,
+      totalSpend: 0,
       discount: false,
-      numberFilms: null,
+      numberFilms: 0,
       rentedFilms: [],
       /*       idFavoriteFilm: [], */
     };
@@ -237,6 +285,24 @@ export default {
       });
       this.filmCart = [];
       console.log("film noleggiati", this.rentedFilms);
+    },
+    passaSopraImmagineCarrello(filmId) {
+      this.activeFilmIdCart = filmId;
+    },
+    esciImmagineCarrello() {
+      this.activeFilmIdCart = null;
+    },
+    passaSopraImmaginePreferiti(filmId) {
+      this.activeFilmIdFavorite = filmId;
+    },
+    esciImmaginePreferiti() {
+      this.activeFilmIdFavorite = null;
+    },
+    passaSopraImmagine(filmId) {
+      this.activeFilmId = filmId;
+    },
+    esciImmagine() {
+      this.activeFilmId = null;
     },
   },
 };
