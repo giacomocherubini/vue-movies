@@ -1,11 +1,13 @@
 <template>
   <div>
-    <p v-if="isFetching">sto caricando ....</p>
-    <p v-if="apiError">{{ apiError }}</p>
-
     <div v-if="apiData.results">
       <div class="container">
         <div class="row">
+          <div class="col-12 text-center">
+            <p v-if="isFetching">sto caricando ....</p>
+            <p v-if="apiError">{{ apiError }}</p>
+          </div>
+
           <div
             class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 p-1"
             v-for="film in arrayMovies"
@@ -26,19 +28,24 @@
                     <div class="card-body">
                       <p class="card-text">
                         Titolo:
-                        <span class="text-grey">
+                        <span class="light-blue">
                           {{ film.original_title }}</span
                         >
                       </p>
                       <p class="card-text">
                         Data di uscita:
-                        <span class="text-grey">{{ film.release_date }}</span>
+                        <span class="light-blue">{{ film.release_date }}</span>
                       </p>
                       <p class="card-text">
                         Voto:
-                        <span class="text-grey">{{ film.vote_average }}</span>
+                        <span class="light-blue">{{ film.vote_average }}</span>
                       </p>
-                      <div class="d-flex justify-content-center">
+                      <img
+                        :src="`${urlImgBase}${film.backdrop_path}`"
+                        class="img-fluid mt-3 body-shadow"
+                        alt="..."
+                      />
+                      <div class="mt-4 d-flex justify-content-center">
                         <button
                           v-if="!isMovieInFavorite(film.id)"
                           @click="addToFavorites(film)"
@@ -46,7 +53,10 @@
                         >
                           Aggiungi ai preferiti
                         </button>
-
+                        <div
+                          class="p-2 red fas fa-heart fa-lg"
+                          v-if="isMovieInFavorite(film.id)"
+                        ></div>
                         <button
                           v-if="!isMovieInCart(film.id)"
                           @click="addToCart(film)"
@@ -54,20 +64,12 @@
                         >
                           Aggiungi al carrello
                         </button>
+                        <div
+                          class="p-2 light-blue fas fa-shopping-cart fa-lg"
+                          v-if="isMovieInCart(film.id)"
+                        ></div>
                       </div>
-                      <img
-                        :src="`${urlImgBase}${film.backdrop_path}`"
-                        class="img-fluid mt-3 body-shadow"
-                        alt="..."
-                      />
                     </div>
-                  </div>
-
-                  <div class="red col-12" v-if="isMovieInFavorite(film.id)">
-                    &hearts;
-                  </div>
-                  <div class="col-12" v-if="isMovieInCart(film.id)">
-                    Aggiunto nel carrello
                   </div>
                 </div>
               </div>
@@ -119,13 +121,6 @@ export default {
       });
       return moviesInCartWithId.length === 1;
     },
-
-    /*     passaSopraImg(filmId) {
-      this.$emit("passa-sopra-img", filmId);
-    },
-    esciImg() {
-      this.$emit("esci-img");
-    }, */
   },
 };
 </script>
@@ -133,7 +128,10 @@ export default {
 <style scoped>
 .red {
   color: red;
-  font-size: 30px;
+}
+
+.light-blue {
+  color: #cfd6e1;
 }
 
 .my-card {
@@ -150,19 +148,18 @@ export default {
 
 .my-img {
   min-height: 100%;
-  /*   min-width: 100%; */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
+  width: 100%;
 }
 
 .my-img2 {
   min-height: 100%;
   display: flex;
   justify-content: end;
-  /*   min-width: 100%; */
   top: 0;
   right: 0;
   margin: auto;
@@ -170,7 +167,6 @@ export default {
 
 .btn {
   font-size: 10px;
-  color: #f4f4f4;
   text-transform: uppercase;
   text-decoration: none;
   border: 1px solid rgb(146, 148, 248);
@@ -189,10 +185,9 @@ export default {
   color: grey;
 }
 
-/* .body-shadow {
-  box-shadow: inset 0px 0px 40px 40px rgba(56, 56, 56, 0.438);
-  opacity: 0.9;
-} */
+.border-radius {
+  border-radius: 5px;
+}
 
 @media screen and (max-width: 575px) {
   .my-card {

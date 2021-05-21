@@ -8,28 +8,28 @@
           </div>
           <div class="col-9 d-flex justify-content-end">
             <a class="nav-link" href="#">
-              <router-link to="/"
+              <router-link to="/home" active-class="active"
                 ><a class="fas fa-home fa-lg"
                   ><span class="d-none d-md-inline pl-3">Home</span></a
                 >
               </router-link>
             </a>
             <a class="nav-link" href="#">
-              <router-link to="/favorites"
+              <router-link to="/favorites" active-class="active"
                 ><a class="fas fa-heart fa-lg"
                   ><span class="d-none d-md-inline pl-3">Favorites</span></a
                 >
               </router-link>
             </a>
             <a class="nav-link" href="#">
-              <router-link to="/cart"
+              <router-link to="/cart" active-class="active"
                 ><a class="fas fa-shopping-cart fa-lg"
                   ><span class="d-none d-md-inline pl-3">Cart</span></a
                 >
               </router-link>
             </a>
             <a class="nav-link" href="#">
-              <router-link to="/rentals"
+              <router-link to="/rentals" active-class="active"
                 ><a class="fas fa-shopping-bag fa-lg"
                   ><span class="d-none d-md-inline pl-3">Rentals</span>
                 </a>
@@ -55,8 +55,11 @@ a {
   text-decoration: none;
   color: white;
 }
-
 .navblack {
   background-color: black;
+}
+
+.active a {
+  color: rgb(146, 148, 248);
 }
 </style>

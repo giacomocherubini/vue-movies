@@ -77,7 +77,7 @@ const searchMoviesModule = {
     }
   },
   actions: {
-    /*     https://vuex.vuejs.org/guide/forms.html#two-way-computed-property */
+
     fetchFilms(context) {
       context.commit('onFetchInit')
       fetch(`${context.state.url_base}${context.state.api_key}&query=${context.state.query}`)
@@ -163,6 +163,9 @@ const cartModule = {
     setActiveMovieId(state, movieId) {
       state.activeMovieIdCart = movieId;
     },
+    removeAllMovieFromCart(state) {
+      state.moviesCart = [];
+    },
 
   }
 }
@@ -177,8 +180,10 @@ const rentedMoviesModule = {
       return state
     }
   },
-  addMovieToRentals(state, movie) {
-    state.push(movie)
+  mutations: {
+    addMovieToRentals(state, movie) {
+      state.push(movie)
+    }
   },
 }
 

@@ -1,36 +1,79 @@
 <template>
   <div v-if="moviesCart[0]">
-    <h3 class="pr-15">Totale carrello: {{ totalSpend }}</h3>
-    <h3 class="pr-15">Totale film: {{ numberFilms }}</h3>
-    <h3 class="pr-15" v-if="isDiscountActive">Sconto applicato</h3>
-    <button v-on:click="addMovieToRentals(film)">Noleggia film</button>
-    <div class="container-cart">
-      <div class="container">
-        <h1 class="pr-15">CART</h1>
-      </div>
-      <div class="container">
+    <div class="container pb-3">
+      <h1 class="p-3">CART</h1>
+      <div class="row">
         <div
-          class="card"
+          class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 p-1"
           @mouseleave="onImgExit()"
           v-for="film in moviesCart"
           :key="film.id"
         >
-          <img
-            v-if="activeMovieIdCart != film.id"
-            @mouseover="onImgHover(film.id)"
-            :src="`${urlImgBase}${film.poster_path}`"
-            alt=""
-          />
+          <div class="my-card bg-black">
+            <div
+              class="wrapper d-flex flex-column justify-content-end overflow-hidden"
+            >
+              <img
+                v-if="activeMovieIdCart != film.id"
+                @mouseover="onImgHover(film.id)"
+                :src="`${urlImgBase}${film.poster_path}`"
+                alt=""
+                class="img-movie"
+              />
 
-          <div v-if="activeMovieIdCart == film.id" class="scheda">
-            <h4>Titolo: {{ film.original_title }}</h4>
-            <h4>Data di uscita: {{ film.release_date }}</h4>
-            <h4>Voto: {{ film.vote_average }}</h4>
+              <div class="container bg-white py-2 z-index-100">
+                <div class="row">
+                  <div class="col-12">
+                    <h4 class="font-weight-bold truncate">
+                      {{ film.original_title }}
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <h6 class="font-weight-bold">Prezzo: 5€</h6>
+                  </div>
+                  <div class="col-6 d-flex justify-content-end">
+                    <h6 class="bg-black text-white p-1">
+                      <span class="fas fa-star text-yellow"></span>
+                      {{ film.vote_average }}
+                    </h6>
+                  </div>
+                  <button
+                    class="btn ml-3 text-black rounded-pill"
+                    @click="removeMovieFromCart(film.id)"
+                  >
+                    Rimuovi dal carrello
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <button @click="removeMovieFromCart(film.id)">
-            Rimuovi dal carrello
-          </button>
-          <!--           <button @click="removeFilmCart(film.id)">Rimuovi dal carrello</button> -->
+        </div>
+      </div>
+      <div class="row py-3 bg-black">
+        <div class="col-3 d-flex justify-content-center text-black">
+          <router-link to="/rentals"
+            ><button
+              class="btn text-white rounded-pill"
+              v-on:click="confirmCart()"
+            >
+              Noleggia film
+            </button>
+          </router-link>
+        </div>
+
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <h4 class="fas fa-film pr-2"></h4>
+          <h4 class="d-none d-md-inline">Totale film</h4>
+          <h4 class="pl-2">{{ numberFilms }}</h4>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <h4 class="fas fa-tags fas fa-check pr-2"></h4>
+          <h4 class="d-none d-md-inline" v-if="isDiscountActive">
+            Sconto applicato
+          </h4>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <h4 class="d-none d-md-inline">Totale prezzo {{ totalSpend }} €</h4>
         </div>
       </div>
     </div>
@@ -55,6 +98,7 @@ export default {
     ...mapMutations({
       addMovieToRentals: "rentedMovies/addMovieToRentals",
       removeMovieFromCart: "cart/removeMovieFromCart",
+      removeAllMovieFromCart: "cart/removeAllMovieFromCart",
       setActiveMovieId: "cart/setActiveMovieId",
     }),
     onImgHover(filmId) {
@@ -63,16 +107,102 @@ export default {
     onImgExit() {
       this.setActiveMovieId(null);
     },
-
-    /* passaSopraImgCarrello(filmId) {
-      this.$emit("passa-sopra-img-carrello", filmId);
+    confirmCart() {
+      this.moviesCart.forEach((element) => {
+        this.addMovieToRentals(element);
+        this.removeAllMovieFromCart();
+      });
     },
-    esciImgCarrello() {
-      this.$emit("esci-img-carrello");
-    },
-    rimuoviFilmCarrello(filmId) {
-      this.$emit("rimuovi-film-carrello", filmId);
-    }, */
   },
 };
 </script>
+
+<style scoped>
+.my-card {
+  color: black;
+  transition: all 0.7s ease-in-out;
+  height: 520px;
+}
+.my-card:hover {
+  transform: scale(1.05);
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.img-movie {
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+}
+
+.btn {
+  font-size: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgb(146, 148, 248);
+}
+
+.btn:hover {
+  box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+  background-color: rgba(146, 148, 248, 0.4);
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.z-index-100 {
+  z-index: 100;
+}
+.text-yellow {
+  color: yellow;
+}
+
+.text-white {
+  color: white;
+}
+.text-black {
+  color: black;
+}
+.bg-black {
+  background-color: black;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.text-grey {
+  color: grey;
+}
+
+.border-radius {
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 1199px) {
+  .my-card {
+    height: 468px;
+  }
+  .img-movie {
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .my-img {
+    margin: auto;
+  }
+}
+</style>
