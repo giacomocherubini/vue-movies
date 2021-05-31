@@ -3,10 +3,12 @@
     <nav class="navblack">
       <div class="container">
         <div class="row">
-          <div class="col-3">
+          <div class="col-3 d-none d-sm-block">
             <h2>MOVIES</h2>
           </div>
-          <div class="col-9 d-flex justify-content-end">
+          <div
+            class="col-12 col-sm-9 d-flex justify-content-between justify-content-sm-end"
+          >
             <a class="nav-link" href="#">
               <router-link to="/home" active-class="active"
                 ><a class="fas fa-home fa-lg"

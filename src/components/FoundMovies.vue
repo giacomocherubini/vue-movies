@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="apiData.results">
-      <div class="container">
+      <div class="container pb-5">
         <div class="row">
           <div class="col-12 text-center">
             <p v-if="isFetching">sto caricando ....</p>
@@ -9,11 +9,14 @@
           </div>
 
           <div
-            class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 p-1"
+            class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3 p-1 cr"
             v-for="film in arrayMovies"
             :key="film.id"
           >
-            <div class="bg-black body-shadow my-card" @mouseleave="onImgExit()">
+            <div
+              class="bg-black my-card d-flex justify-content-center"
+              @mouseleave="onImgExit()"
+            >
               <div class="wrapper">
                 <img
                   class="img-fluid my-img"
@@ -23,36 +26,36 @@
                   alt=""
                 />
 
-                <div v-if="activeMovieId == film.id" class="p-3">
+                <div
+                  v-if="activeMovieId == film.id"
+                  class="p-3 d-flex justify-content-center"
+                >
                   <div class="card bg-black">
                     <div class="card-body">
                       <p class="card-text">
-                        Titolo:
-                        <span class="light-blue">
+                        <span class="light-blue original-title">
                           {{ film.original_title }}</span
                         >
                       </p>
-                      <p class="card-text">
-                        Data di uscita:
+                      <p class="card-text release-date">
+                        Release date:
                         <span class="light-blue">{{ film.release_date }}</span>
                       </p>
                       <p class="card-text">
-                        Voto:
+                        Rating:
                         <span class="light-blue">{{ film.vote_average }}</span>
                       </p>
                       <img
                         :src="`${urlImgBase}${film.backdrop_path}`"
-                        class="img-fluid mt-3 body-shadow"
+                        class="img-fluid mt-3 body-shadow img-backdrop"
                         alt="..."
                       />
                       <div class="mt-4 d-flex justify-content-center">
                         <button
                           v-if="!isMovieInFavorite(film.id)"
                           @click="addToFavorites(film)"
-                          class="btn p-2"
-                        >
-                          Aggiungi ai preferiti
-                        </button>
+                          class="btn p-2 rounded-pill mr-1 fas fa-heart fa-lg"
+                        ></button>
                         <div
                           class="p-2 red fas fa-heart fa-lg"
                           v-if="isMovieInFavorite(film.id)"
@@ -60,10 +63,8 @@
                         <button
                           v-if="!isMovieInCart(film.id)"
                           @click="addToCart(film)"
-                          class="btn p-2"
-                        >
-                          Aggiungi al carrello
-                        </button>
+                          class="btn p-2 rounded-pill ml-1 fas fa-cart-plus fa-lg"
+                        ></button>
                         <div
                           class="p-2 light-blue fas fa-shopping-cart fa-lg"
                           v-if="isMovieInCart(film.id)"
@@ -133,6 +134,12 @@ export default {
 .light-blue {
   color: #cfd6e1;
 }
+.cr {
+  transition: transform 0.8s ease-in-out;
+}
+.cr:hover {
+  transform: scale(1.06);
+}
 
 .my-card {
   height: 420px;
@@ -166,10 +173,9 @@ export default {
 }
 
 .btn {
-  font-size: 10px;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid rgb(146, 148, 248);
+  border: 2px solid rgb(146, 148, 248);
   color: #f4f4f4;
 }
 
@@ -181,20 +187,79 @@ export default {
   background-color: black;
 }
 
-.text-grey {
-  color: grey;
-}
-
-.border-radius {
-  border-radius: 5px;
-}
-
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 280px) {
   .my-card {
-    height: 400px;
+    height: 220px;
   }
   .my-img {
     width: auto;
+    max-width: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .my-card {
+    height: 250px;
+  }
+  .my-img {
+    width: auto;
+    max-width: none;
+  }
+  .release-date {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .my-card {
+    height: 300px;
+  }
+  .my-img {
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .my-img {
+    height: 100%;
+    width: auto;
+    max-width: none;
+  }
+  .img-backdrop {
+    display: none;
+  }
+
+  .release-date {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .card-body {
+    font-size: 0.8rem;
+  }
+
+  .my-card {
+    height: 400px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .my-card {
+    height: 360px;
+  }
+  .card-body {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .card-body {
+    font-size: 0.8rem;
+  }
+  .my-card {
+    height: 360px;
   }
 }
 </style>

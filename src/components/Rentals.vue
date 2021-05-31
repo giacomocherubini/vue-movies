@@ -3,8 +3,8 @@
     <div class="container pb-3">
       <h1 class="p-3">RENTED</h1>
       <div class="mb-1 p-1" v-for="film in rentedMovies" :key="film.id">
-        <div class="row bg-black mt-3 p-3 rounded-pill">
-          <div class="col-2 pl-5">
+        <div class="row rented bg-black mt-3 p-4 rounded-pill">
+          <div class="col-sm-3 col-lg-2 container-img pl-5">
             <img
               :src="`${urlImgBase}${film.poster_path}`"
               alt=""
@@ -12,11 +12,15 @@
             />
           </div>
 
-          <div class="col-8 d-flex align-items-center">
-            <h3 class="sky-blue">{{ film.original_title }}</h3>
+          <div
+            class="col-6 col-sm-6 col-md-7 col-lg-8 d-flex align-items-center"
+          >
+            <h5 class="sky-blue">{{ film.original_title }}</h5>
           </div>
-          <div class="col-2 d-flex align-items-center">
-            <h3 class="">Prezzo 5€</h3>
+          <div
+            class="col-6 col-sm-3 col-md-2 col-lg-2 d-flex align-items-center justify-content-end"
+          >
+            <h5 class="">Price 5€</h5>
           </div>
         </div>
       </div>
@@ -52,7 +56,9 @@ export default {
   color: #9ac7fa;
 }
 
-.yellow {
-  color: yellow;
+@media screen and (max-width: 575px) {
+  .container-img {
+    display: none;
+  }
 }
 </style>

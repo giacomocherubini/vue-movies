@@ -1,55 +1,61 @@
 <template>
   <div v-if="favoritesMovies[0]">
-    <div class="container">
-      <h1 class="pt-3">FAVORITE FILM</h1>
+    <div class="container pb-5">
+      <h1 class="pt-3">FAVORITES MOVIES</h1>
       <div
         class="my-card bg-black mt-5 overflow-hidden"
         v-for="film in favoritesMovies"
         :key="film.id"
       >
         <div class="row">
-          <div class="col-7">
+          <div class="col-12 col-sm-7">
             <div class="row p-3">
               <div class="col-12">
-                <img
-                  v-if="activeMovieIdFavorite != film.id"
-                  :src="`${urlImgBase}${film.poster_path}`"
-                  alt=""
-                  class="img-locandina"
-                />
-                <div class="d-inline-block pl-3">
-                  <h3>{{ film.original_title }}</h3>
-                  <h5 class="sky-blue">{{ film.release_date }}</h5>
+                <div class="row">
+                  <div class="col-auto container-small-poster">
+                    <img
+                      v-if="activeMovieIdFavorite != film.id"
+                      :src="`${urlImgBase}${film.poster_path}`"
+                      alt=""
+                      class="img-small-poster"
+                    />
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <div class="ml-2 font-rem">
+                      <h4>{{ film.original_title }}</h4>
+                      <h5 class="sky-blue">{{ film.release_date }}</h5>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div class="col-12">
-                <p class="overview font-rem light-blue pt-3 overflow-hidden">
+                <p class="overview light-blue pt-3 overflow-hidden">
                   {{ film.overview }}
                 </p>
               </div>
-              <div class="col-12">
+              <div class="col-12 d-flex align-items-center">
                 <button
-                  class="btn2 p-1 m-2"
+                  class="btn2 font-10 p-2 m-2 rounded-pill"
                   @click="removeMovieFromFavorite(film.id)"
                 >
-                  Rimuovi dai preferiti
+                  Remove from favorites
                 </button>
                 <button
-                  class="btn2 p-1 m-2"
+                  class="btn2 p-2 m-2 fas fa-cart-plus rounded-pill"
                   v-if="!isMovieInCart(film.id)"
                   @click="addToCart(film)"
-                >
-                  Aggiungi al carrello
-                </button>
-                <span
-                  class="light-blue fas fa-shopping-cart fa-lg"
+                ></button>
+                <div
+                  class="light-blue m-2 fas fa-shopping-cart fa-lg"
                   v-if="isMovieInCart(film.id)"
-                ></span>
+                ></div>
               </div>
             </div>
           </div>
-          <div class="col-5 position-relative overflow-hidden">
+          <div
+            class="d-none d-sm-block col-5 position-relative overflow-hidden"
+          >
             <img
               v-if="activeMovieIdFavorite != film.id"
               :src="`${urlImgBase}${film.backdrop_path}`"
@@ -99,6 +105,15 @@ export default {
 </script>
 
 <style scoped>
+.my-card {
+  border-radius: 15px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.my-card:hover {
+  transform: scale(1.02);
+}
+
 .img-poster {
   position: absolute;
   top: 50%;
@@ -112,7 +127,7 @@ export default {
   overflow: hidden;
 }
 
-.img-locandina {
+.img-small-poster {
   height: 120px;
 }
 
@@ -121,12 +136,15 @@ export default {
 }
 
 .btn2 {
-  font-size: 10px;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid rgb(146, 148, 248);
+  border: 2px solid rgb(146, 148, 248);
   color: #f4f4f4;
   background-color: black;
+}
+
+.font-10 {
+  font-size: 10px;
 }
 
 .btn2:hover {
@@ -167,14 +185,8 @@ export default {
 }
 
 @media screen and (max-width: 767px) {
-  .font-rem {
-    font-size: 0.7rem;
-  }
-}
-
-@media screen and (max-width: 575px) {
   .overview,
-  .img-locandina {
+  .container-small-poster {
     display: none;
   }
 }

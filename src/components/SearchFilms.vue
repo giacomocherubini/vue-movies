@@ -1,12 +1,16 @@
 <template>
-  <div class="padding-25 d-flex justify-content-center">
+  <div class="padding-25 d-flex justify-content-center align-items-center">
     <input
       type="text"
       v-model="title"
       name="nome"
-      class="border-radius my-input bg-grey"
+      class="border-radius my-input bg-grey pl-2"
     />
-    <a href="#" class="btn fas fa-search my-search p-1" @click="invia()"></a>
+    <a
+      href="#"
+      class="btn fas fa-search fa-lg my-search pr-2"
+      @click="invia()"
+    ></a>
   </div>
 </template>
 
@@ -49,19 +53,30 @@ export default {
 }
 
 .border-radius {
-  border-radius: 5px;
+  border-radius: 10px;
+}
+
+.my-input {
+  text-decoration: none;
+  border: 2px solid rgb(146, 148, 248);
 }
 
 .my-input,
 .my-search {
-  text-decoration: none;
-  border: 1px solid rgb(146, 148, 248);
   color: white;
+}
+
+.my-search {
+  border: 0;
 }
 
 .my-input:hover,
 .my-search:hover {
   box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+}
+
+.my-input:focus {
+  outline: none;
 }
 
 .bg-grey {

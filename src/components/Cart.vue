@@ -24,12 +24,12 @@
               <div class="container bg-white py-2 z-index-100">
                 <div class="row">
                   <div class="col-12">
-                    <h4 class="font-weight-bold truncate">
+                    <h5 class="font-weight-bold truncate">
                       {{ film.original_title }}
-                    </h4>
+                    </h5>
                   </div>
                   <div class="col-6">
-                    <h6 class="font-weight-bold">Prezzo: 5€</h6>
+                    <h6 class="font-weight-bold">Price: 5€</h6>
                   </div>
                   <div class="col-6 d-flex justify-content-end">
                     <h6 class="bg-black text-white p-1">
@@ -41,7 +41,7 @@
                     class="btn ml-3 text-black rounded-pill"
                     @click="removeMovieFromCart(film.id)"
                   >
-                    Rimuovi dal carrello
+                    Remove from cart
                   </button>
                 </div>
               </div>
@@ -56,24 +56,26 @@
               class="btn text-white rounded-pill"
               v-on:click="confirmCart()"
             >
-              Noleggia film
+              Rent movies
             </button>
           </router-link>
         </div>
 
         <div class="col-3 d-flex justify-content-center align-items-center">
-          <h4 class="fas fa-film pr-2"></h4>
-          <h4 class="d-none d-md-inline">Totale film</h4>
-          <h4 class="pl-2">{{ numberFilms }}</h4>
+          <h5 class="fas fa-film pr-2"></h5>
+          <h5 class="d-none d-lg-inline">Total movies</h5>
+          <h5 class="pl-2">{{ numberFilms }}</h5>
         </div>
         <div class="col-3 d-flex justify-content-center align-items-center">
-          <h4 class="fas fa-tags fas fa-check pr-2"></h4>
-          <h4 class="d-none d-md-inline" v-if="isDiscountActive">
-            Sconto applicato
-          </h4>
+          <h5 class="fas fa-tags fas fa-check pr-2"></h5>
+          <h5 class="d-none d-lg-inline" v-if="isDiscountActive">
+            Discount applied
+          </h5>
         </div>
         <div class="col-3 d-flex justify-content-center align-items-center">
-          <h4 class="d-none d-md-inline">Totale prezzo {{ totalSpend }} €</h4>
+          <h5 class="fas fa-money-bill-wave pr-2"></h5>
+          <h5 class="d-none d-lg-inline">Total price</h5>
+          <h5 class="pl-2">{{ totalSpend }} €</h5>
         </div>
       </div>
     </div>
@@ -120,7 +122,7 @@ export default {
 <style scoped>
 .my-card {
   color: black;
-  transition: all 0.7s ease-in-out;
+  transition: transform 0.7s ease-in-out;
   height: 520px;
 }
 .my-card:hover {
@@ -148,7 +150,7 @@ export default {
   font-size: 10px;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid rgb(146, 148, 248);
+  border: 2px solid rgb(146, 148, 248);
 }
 
 .btn:hover {
@@ -193,16 +195,13 @@ export default {
 
 @media screen and (max-width: 1199px) {
   .my-card {
-    height: 468px;
-  }
-  .img-movie {
-    height: 350px;
+    height: 460px;
   }
 }
 
-@media screen and (max-width: 575px) {
-  .my-img {
-    margin: auto;
+@media screen and (max-width: 767px) {
+  .my-card {
+    height: 500px;
   }
 }
 </style>
