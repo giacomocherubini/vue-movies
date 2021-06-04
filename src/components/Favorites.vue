@@ -1,6 +1,12 @@
 <template>
-  <div v-if="favoritesMovies[0]">
-    <div class="container pb-5">
+  <div>
+    <div
+      v-if="favoritesMovies.length == 0"
+      class="container text-center mt-5 py-5"
+    >
+      <h1>FAVORITES IS EMPTY</h1>
+    </div>
+    <div v-else class="container pb-5">
       <h1 class="pt-3">FAVORITES MOVIES</h1>
       <div
         class="my-card bg-black mt-5 overflow-hidden"

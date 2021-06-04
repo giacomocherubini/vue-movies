@@ -41,7 +41,7 @@
                         Release date:
                         <span class="light-blue">{{ film.release_date }}</span>
                       </p>
-                      <p class="card-text">
+                      <p class="card-text rating">
                         Rating:
                         <span class="light-blue">{{ film.vote_average }}</span>
                       </p>
@@ -54,21 +54,23 @@
                         <button
                           v-if="!isMovieInFavorite(film.id)"
                           @click="addToFavorites(film)"
-                          class="btn p-2 rounded-pill mr-1 fas fa-heart fa-lg"
+                          class="btn text-white p-2 rounded-pill mr-1 fas fa-heart fa-lg"
                         ></button>
-                        <div
-                          class="p-2 red fas fa-heart fa-lg"
+                        <button
+                          class="btn p-2 rounded-pill red mr-1 fas fa-heart fa-lg"
                           v-if="isMovieInFavorite(film.id)"
-                        ></div>
+                          @click="removeMovieFromFavorite(film.id)"
+                        ></button>
                         <button
                           v-if="!isMovieInCart(film.id)"
                           @click="addToCart(film)"
-                          class="btn p-2 rounded-pill ml-1 fas fa-cart-plus fa-lg"
+                          class="btn text-white p-2 rounded-pill ml-1 fas fa-cart-plus fa-lg"
                         ></button>
-                        <div
-                          class="p-2 light-blue fas fa-shopping-cart fa-lg"
+                        <button
                           v-if="isMovieInCart(film.id)"
-                        ></div>
+                          @click="removeMovieFromCart(film.id)"
+                          class="btn p-2 rounded-pill light-blue ml-1 fas fa-shopping-cart fa-lg"
+                        ></button>
                       </div>
                     </div>
                   </div>
@@ -103,6 +105,8 @@ export default {
       addToFavorites: "favoritesMovies/addMovieToFavorites",
       addToCart: "cart/addMovieToCart",
       setActiveMovieId: "searchMovies/setActiveMovieId",
+      removeMovieFromCart: "cart/removeMovieFromCart",
+      removeMovieFromFavorite: "favoritesMovies/removeMovieFromFavorite",
     }),
     onImgHover(filmId) {
       this.setActiveMovieId(filmId);
@@ -176,7 +180,6 @@ export default {
   text-transform: uppercase;
   text-decoration: none;
   border: 2px solid rgb(146, 148, 248);
-  color: #f4f4f4;
 }
 
 .btn:hover {
@@ -187,26 +190,15 @@ export default {
   background-color: black;
 }
 
-@media screen and (max-width: 280px) {
+@media screen and (max-width: 525px) {
   .my-card {
-    height: 220px;
-  }
-  .my-img {
-    width: auto;
-    max-width: none;
+    height: 370px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 475px) {
   .my-card {
-    height: 250px;
-  }
-  .my-img {
-    width: auto;
-    max-width: none;
-  }
-  .release-date {
-    display: none;
+    height: 340px;
   }
 }
 
@@ -214,9 +206,34 @@ export default {
   .my-card {
     height: 300px;
   }
-  .my-img {
-    width: auto;
-    max-width: none;
+}
+
+@media screen and (max-width: 365px) {
+  .my-card {
+    height: 275px;
+  }
+
+  .original-title {
+    font-size: 0.6rem;
+  }
+
+  .rating {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .my-card {
+    height: 250px;
+  }
+  .release-date {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .my-card {
+    height: 220px;
   }
 }
 

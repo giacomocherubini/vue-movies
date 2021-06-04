@@ -13,12 +13,12 @@
           </div>
 
           <div
-            class="col-6 col-sm-6 col-md-7 col-lg-8 d-flex align-items-center"
+            class="col-12 col-sm-6 col-md-7 col-lg-8 d-flex align-items-center justify-content-center justify-content-sm-start"
           >
             <h5 class="sky-blue">{{ film.original_title }}</h5>
           </div>
           <div
-            class="col-6 col-sm-3 col-md-2 col-lg-2 d-flex align-items-center justify-content-end"
+            class="col-12 col-sm-3 col-md-2 col-lg-2 d-flex align-items-center justify-content-center justify-content-sm-end"
           >
             <h5 class="">Price 5€</h5>
           </div>
